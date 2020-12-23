@@ -1,3 +1,13 @@
+@font-face {
+  font-family: 'SpaceMono';
+  src: local('SpaceMono'), url(./SpaceMono-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: local('Montserrat'), url(./Montserrat-Regular.ttf) format('truetype');
+}
+
 .App {
   text-align: center;
 }
@@ -5,12 +15,6 @@
 .App-logo {
   height: 40vmin;
   pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
 }
 
 .App-header {
@@ -28,11 +32,77 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
+.serif {
+  font-family: "Times New Roman", Times, serif;
+}
+
+.sansserif {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.monospace {
+  color: white;
+  font-size: calc(10px + 2vmin);
+  font-family: "SpaceMono", Courier, monospace;
+  flex-grow: 1;
+}
+
+.fancy {
+  font-size: calc(5px + 2vmin);
+  font-family: "Montserrat", Helvetica, serif;
+}
+
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+} 
+
+@keyframes slidein {
   from {
-    transform: rotate(0deg);
+    margin-left: 100%;
   }
+
   to {
-    transform: rotate(360deg);
+    margin-left: 0%;
   }
+}
+
+.big-monospace {
+  font-size: calc(20px + 2vmin);
+  font-family: "SpaceMono", Courier, monospace;
+}
+
+.content {
+  animation: 3s fadeIn;
+}
+
+.info {
+  margin-left: 20vmin;
+  margin-right: 20vmin;
+}
+
+.text {
+  margin-top: 4vmin;
+  font-size: calc(5px + 2vmin);
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.pic {
+  animation: 2s fadeIn;
+  margin-top: 8vmin;
+  border-color: black;
+  border-width: 1vmin;
+  border-style: solid;
+  border-radius: 50%;
+  margin-bottom: -2.5vmin;
+}
+
+.title {
+  font-size: calc(20px + 2vmin);
+  font-family: "SpaceMono", Courier, monospace;
 }
