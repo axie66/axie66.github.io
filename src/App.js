@@ -1,13 +1,17 @@
-import React, { Component, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { AppBar, Toolbar, Divider, Button, Card, Grid, Container, CardContent, 
-         Typography, CardMedia, CardHeader, CardActions, IconButton, 
-         Collapse, List, ListItem, ListItemText, ListItemIcon} from '@material-ui/core'
+         Paper, Typography, CardMedia, CardHeader, CardActions, CardActionArea, 
+         IconButton, Drawer, Hidden, Collapse, List, ListItem, ListItemText, 
+         ListItemIcon, Chip, GridList, GridListTile, GridListTileBar} from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import GitHubIcon from '@material-ui/icons/GitHub';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Element, animateScroll as scroll, scroller } from "react-scroll";
-
+import { fpyl_text, pyvm_text, qc_text } from './text';
 
 const theme = createMuiTheme({
   palette: {
@@ -30,50 +34,89 @@ const theme = createMuiTheme({
 function handleClick(id) {
   // var elem = document.getElementById(id)
   // if(elem) elem.scrollIntoView();
-  if (id === 'About Me')
-    scroll.scrollToTop();
-  else {
     //console.log(document.getElementById(id).getBoundingClientRect())
-    scroller.scrollTo(id, {
-      duration: 800,
-      delay: 0,
-      smooth: 'easeInOutQuart'
-    });
+  scroller.scrollTo(id, {
+    duration: 800,
+    delay: 0,
+    smooth: 'easeInOutQuart'
+  });
+}
+
+const useWelcomeStyles = makeStyles({
+  title: {
+    marginTop: 50
   }
+});
+
+function WelcomeSection() {
+  const classes = useWelcomeStyles();
+
+  const greeting = 'Welcome to my website!'
+  const delay = 70;
+
+  const [ index, setIndex ] = useState(0);
+  useEffect(() => {
+    let interval = null;
+    if (0 <= index < greeting.length) {
+      interval = setInterval(() => 
+        {
+          if (index < greeting.length) {
+            console.log(index)
+            setIndex(i => i + 1)
+          }
+          else {
+            console.log("byebye")
+            clearInterval(interval);
+          }
+        }, delay)
+    } else {
+      console.log('clearing...');
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [index])
+
+  return (
+    <React.Fragment>
+      <Typography variant='h2' align='left' className={classes.title}>
+        {greeting.substring(0, index)}<span style={{color: 'white'}}>{index < greeting.length ? greeting.substring(index) : ''}</span>
+      </Typography>
+    </React.Fragment>
+  );
 }
 
 
+const useHeaderStyles = makeStyles(theme => ({
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1
+  }
+}));
 function TopBar() {
+  const classes = useHeaderStyles();
+
   const sections = ['About Me', 'Coursework', 'Projects']
   const buttons = sections.map((section, index) => (
-    <Grid item>
-      <Button key={index} onClick={() => handleClick(section)}>
-        <Typography variant='h6' style={{color: 'white'}}>{section}</Typography>
-      </Button>
-    </Grid>
+    <Button key={index} onClick={() => handleClick(section)}>
+      <Typography variant='h6' style={{color: 'white'}}>{section}</Typography>
+    </Button>
   ));
   return (
-    <div id={0} className='topBar'>
-      <AppBar style={{height:60}} position="fixed">
-        <Grid container style={{marginTop: 9}} justify='center'>
-          <Grid item xs={'auto'} sm={1.5} />
-          <Grid item xs={11} sm={9} container spacing={4} direction='row'>
-            <Grid item>
-              <Typography style={{marginTop: 0}} variant='h4'>Alex Xie</Typography>
-            </Grid>
-              {buttons}
-          </Grid>
-          <Grid item xs={'auto'} sm={1.5} />
-        </Grid>
+    <React.Fragment>
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar>
+          <Typography style={{marginRight: 10}}variant='h5'>Alex Xie</Typography>
+          {buttons}
+        </Toolbar>
       </AppBar>
       <Toolbar />
-    </div>
+    </React.Fragment>
   );
 }
 
 const useCardStyles = makeStyles({
   root: {
     minWidth: 200,
+    maxWidth: 600,
   },
   projectImg: {
     height:0,
@@ -101,6 +144,14 @@ const useCardStyles = makeStyles({
       duration: theme.transitions.duration.shortest,
     }),
   },
+  iconButton: {
+    margin: 'auto',
+    display: 'block',
+    transform: 'scale(1.5)'
+  },
+  chip: {
+    margin: '5px',
+  }
 });
 
 function Project(props) {
@@ -110,44 +161,40 @@ function Project(props) {
   const handleExpandClick = () => {setExpanded(!expanded)};
 
   return (
-    <Grid className={classes.root} item xs={12} md={6}>
-      <Card variant='outlined'>
-        <div className='center'>
-          <CardHeader title={props.title}/>
-        </div>
-        <Divider />
-        <CardMedia className={classes.projectImg} image={props.image}/>
-        <CardActions>
-          <IconButton className={expanded ? classes.expandOpen : classes.expand}
-          onClick={handleExpandClick} aria-expanded={expanded} aria-label='show more'>
-            <ExpandMoreIcon />
-          </IconButton>
-        </CardActions>
+    <Grid className={classes.root} item xs={12} lg={6}>
+      <Card style={{borderRadius: '30px'}} variant='outlined'>
+        <CardActionArea onClick={handleExpandClick} style={{borderRadius: '30px'}}>
+          <div className='center'>
+            <CardHeader title={props.title}/>
+          </div>
+          <Divider />
+          <CardMedia className={classes.projectImg} image={props.image}/>
+          <CardActions>
+            <IconButton className={expanded ? classes.expandOpen : classes.expand}
+            onClick={handleExpandClick} aria-expanded={expanded} aria-label='show more'>
+              <ExpandMoreIcon />
+            </IconButton>
+          </CardActions>
+        </CardActionArea>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <Divider />
           <CardContent>
-            <Typography paragraph>Method:</Typography>
-            <Typography paragraph>
-              Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-              minutes.
-            </Typography>
-            <Typography paragraph>
-              Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-              heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-              browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving chicken
-              and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion, salt and
-              pepper, and cook, stirring often until thickened and fragrant, about 10 minutes. Add
-              saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-            </Typography>
-            <Typography paragraph>
-              Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-              without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat to
-              medium-low, add reserved shrimp and mussels, tucking them down into the rice, and cook
-              again without stirring, until mussels have opened and rice is just tender, 5 to 7
-              minutes more. (Discard any mussels that don’t open.)
-            </Typography>
-            <Typography>
-              Set aside off of the heat to let rest for 10 minutes, and then serve.
-            </Typography>
+            <Typography style={{marginTop: -20}}>{props.content}</Typography>
+            <div style={{display: 'flex', margin: 20, marginBottom: 0}}>
+              <div style={{display: 'flex', flex: 0, marginRight: 20}}>
+                <IconButton className={classes.iconButton}
+                onClick={() => window.open(props.link, "noopener,noreferrer")}>
+                  <GitHubIcon />
+                </IconButton>
+              </div>
+              <div style={{display: 'flex', flex: 1, justifyContent: 'left', flexWrap: 'wrap',}}>
+                {
+                  props.tech.map(elem =>
+                    <Chip label={elem} className={classes.chip} />
+                  )
+                }
+              </div>
+            </div>
           </CardContent>
         </Collapse>
       </Card>
@@ -155,64 +202,147 @@ function Project(props) {
   )
 }
 
+const useAboutStyles = makeStyles({
+  img: {
+    borderRadius: '50%',
+    width: 180,
+    height: 180,
+    margin: 20,
+    border: "2px solid white",
+    [theme.breakpoints.down('xs')]: {
+      margin: 0,
+      marginTop: 30,
+      marginBottom: 20,
+      position: 'relative',
+      left: 'calc(50% - 90px)',
+    }
+  },
+  content: {
+    [theme.breakpoints.up('xs')]: {
+      marginTop: '7%',
+    },
+    [theme.breakpoints.down('xs')]: {
+      marginTop: -10,
+      marginLeft: 10,
+      textAlign: 'center'
+    },
+    marginRight: 10,
+    color: 'white'
+  },
+  paper: {
+    background: '#421eb0',
+    borderRadius: 0,
+    display: 'flex',
+    padding: 10,
+  },
+  card: {
+    margin: 20,
+    background: '#421eb0',
+  },
+  row: {
+    [theme.breakpoints.up('xs')]: {
+      display: 'flex',
+      flexDirection: 'row',
+    },
+    [theme.breakpoints.down('xs')]: {
+      display: 'block',
+    }
+  },
+  buttons: {
+    marginTop: 10,
+    marginBottom: 10
+  }
+})
 function AboutSection(props) {
+  const classes = useAboutStyles();
+
   return (
-    <React.Fragment>
-      <Element name='About Me' />
-        <Grid container spacing={6} style={{marginTop:20, marginBottom:30}}>
-          <Grid item>
-            <img alt='me' style={{borderRadius: '50%', width: 128, height: 128,
-                         maxWidth: '100%', maxHeight: '100%'}} src={process.env.PUBLIC_URL + 'alexx.jpg'}/>
-          </Grid>
-          <Grid item xs='12' sm container direction='column'>
-            <Grid item>
-              <Typography paragraph variant='h4'>About Me</Typography>
+
+  // use Hidden component to hide stuff
+    // <Grid container justify='center'>
+    //   {/* <Element name='About Me' /> */}
+    //   <Grid item>
+    <Paper className={classes.paper}>
+      <Card className={classes.card} variant='elevation' elevation={20}>
+        <div className={classes.row}>
+          <CardMedia component='img' className={classes.img} image={process.env.PUBLIC_URL + 'alexx.jpg'}/>
+          <CardContent className={classes.content}>
+            <Typography variant='h5'>Hi! I'm Alex, a sophomore majoring in ECE at Carnegie Mellon.</Typography>
+            <Grid item container justify='center' spacing={2} className={classes.buttons}>
+              <Grid item>
+                <IconButton style={{transform: 'scale(1.2)'}} aria-label="Github" color='secondary'
+                onClick={() => window.open('https://github.com/axie66/', "noopener,noreferrer")}>
+                  <GitHubIcon />
+                </IconButton>
+              </Grid>
+              <Grid item>
+                <IconButton style={{transform: 'scale(1.2)'}} color='secondary'
+                onClick={() => window.open(process.env.PUBLIC_URL + 'resume.pdf', 'noopener,noreferrer')}>
+                  <Typography fontWeight="fontWeightBold" >CV</Typography>
+                </IconButton>
+              </Grid>
+              <Grid item>
+                <IconButton style={{transform: 'scale(1.2)'}} aria-label="LinkedIn" color='secondary'
+                onClick={() => window.open('https://linkedin.com/in/axie', "noopener,noreferrer")}>
+                  <LinkedInIcon />
+                </IconButton>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Typography paragraph>Hi! I'm Alex, a sophomore majoring in ECE and minoring in computer science at Carnegie Mellon.</Typography>
-            </Grid>
-          </Grid>
-        </Grid>
-    </React.Fragment>
+          </CardContent>
+        </div>
+        <Grid item />
+      </Card>
+    </Paper>
+    //   </Grid>
+    // </Grid>
   )
 }
 
+const useCourseStyles = makeStyles({
+  list: {
+    [theme.breakpoints.down('xs')]: {
+      marginTop: -48
+    }
+  }
+});
+
 function CourseSection(props) {
+  const classes = useCourseStyles();
+
   const courses = [
-    ['11-485', 'Introduction to Deep Learning', 'https://deeplearning.cs.cmu.edu/S21/index.html'],
+    ['11-785', 'Introduction to Deep Learning', 'https://deeplearning.cs.cmu.edu/S21/index.html'],
     ['15-251', 'Great Ideas In Theoretical Computer Science', 'http://www.cs.cmu.edu/~15251/'],
     ['15-210', 'Parallel & Sequential Data Structures and Algorithms', 'https://www.cs.cmu.edu/~15210/'],
     ['15-150', 'Functional Programming', 'http://www.cs.cmu.edu/~15150/'],
-    ['15-122', 'Principles of Imperative Computation', 'http://www.cs.cmu.edu/~15122/'],
     ['18-213', 'Introduction to Computer Systems', 'http://www.cs.cmu.edu/~213/'],
     ['18-240', 'Structure and Design of Digital Systems', 'https://courses.ece.cmu.edu/18240'],
     ['18-290', 'Signals and Systems', 'https://courses.ece.cmu.edu/18290'],
-    ['15-112', 'Fundamentals of Programming and Computer Science', 'http://www.cs.cmu.edu/~112/'],
+    ['15-122', 'Principles of Imperative Computation', 'http://www.cs.cmu.edu/~15122/'],
   ]
 
   const generateListItems = (courses) => courses.map((course) => 
-    <ListItem button onClick={() => window.open(course[2], "_blank", "noopener,noreferrer")}>
+    <ListItem button onClick={() => window.open(course[2], "noopener,noreferrer")}>
       <ListItemIcon><CheckCircleOutlineIcon /></ListItemIcon>
-      <ListItemText primary={course[0]} secondary={course[1]}/>
+      <ListItemText primary={course[1]} secondary={course[0]}/>
     </ListItem>)
 
   return (
     <React.Fragment>
-      <Typography id='Coursework' variant='h4'>Selected Coursework</Typography>
       <Element name='Coursework' />
-        <Grid container spacing={4} style={{marginTop: -10, marginBottom: 30}}>
-          <Grid item xs={6}>
-            <List>
-              {generateListItems(courses.slice(0,5))}
-            </List>
-          </Grid>
-          <Grid item xs={6}>
-            <List>
-              {generateListItems(courses.slice(5))}
-            </List>
-          </Grid>
+      <Typography id='Coursework' variant='h4'>Selected Coursework</Typography>
+      <Divider style={{marginBottom: 20}} />
+      <Grid container spacing={4}>
+        <Grid item xs={12} sm={6}>
+          <List>
+            {generateListItems(courses.slice(0,4))}
+          </List>
         </Grid>
-
+        <Grid className={classes.list} item xs={12} sm={6}>
+          <List>
+            {generateListItems(courses.slice(4))}
+          </List>
+        </Grid>
+      </Grid>
     </React.Fragment>
   )
 }
@@ -228,141 +358,243 @@ function ProjectSection(props) {
 
   return (
     <React.Fragment>
-      <Typography id='Projects' variant='h4'>Projects</Typography>
       <Element name='Projects'/>
-     
-      <Grid container justify='center' spacing={3} style={{marginTop: 20, marginBottom: 20}}>
-        <Project title='FPyL' image='https://i.pinimg.com/originals/ac/f5/28/acf5284effcb7adf9fbdc6d0823be418.png'/>
-        <Project title='PyVM' image='https://cdn.freebiesupply.com/logos/thumbs/2x/python-3-logo.png'/>
-        {/*<Project title='Graph Signal Processing' image='https://media.arxiv-vanity.com/render-output/3730753/x1.png'/>*/}
-        <Project title='Quantum Cryptography' image={process.env.PUBLIC_URL + 'quantumcomputing.png'}/>
+      <Typography id='Projects' variant='h4'>Projects</Typography>
+
+      <Divider />
+
+      <Grid container justify='center' spacing={3} style={{marginTop: 30, marginBottom: 20}}>
+        <Project title='FPyL + FPL Helper' content={fpyl_text} 
+         link='https://github.com/axie66/FPyL' 
+         tech={['Python', 'Javascript', 'scikit-learn', 'BeautifulSoup', 'React', 'Flask']}
+         image='https://i.pinimg.com/originals/ac/f5/28/acf5284effcb7adf9fbdc6d0823be418.png'/>
+        <Project title='PyVM' content={pyvm_text}
+         link='https://github.com/axie66/pyvm'
+         tech={['Python', 'Bytecode']}
+         image='https://kuafu1994.github.io/HackWithGDB/figs/stack.png'/>
+        <Project title='Intro to Quantum Cryptography' content={qc_text}
+         link='https://github.com/axie66/QuantumCrypto'
+         tech={['Python', 'Qiskit']}
+         image={process.env.PUBLIC_URL + 'quantumcomputing.png'}/>
       </Grid>
     </React.Fragment>
   )
 }
 
-// const useMiscStyles = makeStyles({
-//   root: {
-//     display: 'flex',
-//     flexWrap: 'wrap',
-//     justifyContent: 'space-around',
-//     overflow: 'hidden',
-//     backgroundColor: theme.palette.background.paper,
-//   },
-//   gridList: {
-//     width: 800,
-//     flexWrap: 'nowrap',
-//     transform: 'translateZ(0)'
-//   },
-// });
+const useMiscStyles = makeStyles({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper,
+  },
+  gridList: {
+    width: 800,
+    flexWrap: 'nowrap',
+    transform: 'translateZ(0)'
+  },
+});
 
-// const albums = [
-//   {
-//     title: 'Melodrama', 
-//     subtitle: 'Lorde',
-//     img: 'https://upload.wikimedia.org/wikipedia/en/b/b2/Lorde_-_Melodrama.png',
-//   },
-//   {
-//     title: 'Bloom', 
-//     subtitle: 'Beach House',
-//     img: 'https://upload.wikimedia.org/wikipedia/en/a/a2/Beach_House_-_Bloom.png',
-//   },
-//   {
-//     title: 'Souvlaki', 
-//     subtitle: 'Slowdive',
-//     img: 'https://dirtynoise.gr/5149/slowdive-souvlaki.jpg',
-//   },
-//   {
-//     title: 'Keep It Like A Secret', 
-//     subtitle: 'Built to Spill',
-//     img: 'https://images-na.ssl-images-amazon.com/images/I/81lXremuJnL._SL1448_.jpg',
-//   },
-//   {
-//     title: 'Antisocialites', 
-//     subtitle: 'Alvvays',
-//     img: 'https://media.pitchfork.com/photos/59b17a4860731f66d2415358/1:1/w_600/alvvays%20new%20cover.jpg',
-//   },
-//   {
-//     title: 'Kaputt', 
-//     subtitle: 'Destroyer',
-//     img: 'https://media.pitchfork.com/photos/5929ad4c9d034d5c69bf4344/1:1/w_600/cdf989af.jpg',
-//   },
-//   {
-//     title: 'Punisher', 
-//     subtitle: 'Phoebe Bridgers',
-//     img: 'https://media.pitchfork.com/photos/5ee923f47bb7acb328d5683d/1:1/w_600/Punisher%20_Phoebe%20Bridgers.jpg',
-//   },
-// ]
+const albums = [
+  {
+    img: 'https://lastfm.freetls.fastly.net/i/u/770x0/ce0cb937c169c4dc6a7b9aa9c65e751f.jpg#ce0cb937c169c4dc6a7b9aa9c65e751f',
+    title: 'Magnolia Electric Co.',
+    subtitle: 'Songs: Ohia',
+  },
+  {
+    img: 'https://lastfm.freetls.fastly.net/i/u/770x0/29c4c9fa6ec71315b6b64e1ca5c82211.jpg#29c4c9fa6ec71315b6b64e1ca5c82211',
+    title: "Didn't It Rain",
+    subtitle: 'Songs: Ohia'
+  },
+  {
+    img: 'https://lastfm.freetls.fastly.net/i/u/770x0/e764090489a84d2b9717830a4d26cf57.jpg#e764090489a84d2b9717830a4d26cf57',
+    title: 'Give Up',
+    subtitle: 'The Postal Service'
+  },
+  {
+    img: 'https://lastfm.freetls.fastly.net/i/u/770x0/01bcdbc62f77f9011cb80acb9eada9bc.jpg#01bcdbc62f77f9011cb80acb9eada9bc',
+    title: 'An Overview on Phenomenal Nature',
+    subtitle: 'Cassandra Jenkins'
+  },
+  {
+    img: 'https://lastfm.freetls.fastly.net/i/u/770x0/5495521a59f49db169b74cbf7332b8b5.jpg#5495521a59f49db169b74cbf7332b8b5',
+    title: 'Kaputt',
+    subtitle: 'Destroyer'
+  },
+  {
+    img: 'https://lastfm.freetls.fastly.net/i/u/770x0/3e95950fb75249bec9fffd8f17b7bc24.jpg#3e95950fb75249bec9fffd8f17b7bc24',
+    title: '#1 Record',
+    subtitle: 'Big Star'
+  },
+  {
+    img: 'https://lastfm.freetls.fastly.net/i/u/770x0/7690aad2072f8a11b5ab9607e894a7e0.jpg#7690aad2072f8a11b5ab9607e894a7e0',
+    title: 'Tyron',
+    subtitle: 'slowthai'
+  }
+]
 
-// const artists = [
-//   {
-//     title: 'Beach House',
-//     subtitle: null,
-//     img: 'https://media2.fdncms.com/riverfronttimes/imager/u/magnum/3018755/music1-1-536c1b524bcc29bc.jpg'
-//   },
-//   {
-//     title: 'Cocteau Twins',
-//     subtitle: null,
-//     img: 'https://i.pinimg.com/originals/52/ac/76/52ac7650ed3043e46d702a5ebae48733.jpg'
-//   },
-//   {
-//     title: 'Phoebe Bridgers',
-//     subtitle: null,
-//     img: 'https://upload.wikimedia.org/wikipedia/commons/b/b6/Phoebe_Bridgers_%2841599189180%29_%28cropped%29.jpg'
-//   },
-//   {
-//     title: 'Slowdive',
-//     subtitle: null,
-//     img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Slowdive_live_1992.jpg/440px-Slowdive_live_1992.jpg'
-//   },
-//   {
-//     title: 'Built to Spill',
-//     subtitle: null,
-//     img: 'https://e-cdns-images.dzcdn.net/images/artist/43f9adf156f5fd38d7955e9299877af3/264x264.jpg'
-//   },
-//   {
-//     title: 'Alvvays',
-//     subtitle: null,
-//     img: 'https://d11mgq5hlnsdgo.cloudfront.net/52ffa728-1d91-492f-9552-105d3ab067c8.jpg'
-//   },
-// ]
+function MiscSection(props) {
+  const classes = useMiscStyles();
 
-// function MiscSection(props) {
-//   const classes = useMiscStyles();
+  const makeGallery = (display) => (
+    <div className={classes.root}>
+      <GridList cellHeight={200} className={classes.gridList} cols={6}>
+          {display.map((tile) => <GridListTile key={tile.img} cols={1.5}>
+            <img src={tile.img} alt={tile.title}/>
+            <GridListTileBar title={tile.title} subtitle={tile.subtitle}/>
+          </GridListTile>)}
+      </GridList>
+    </div>
+  )
 
-//   const makeGallery = (display) => (
-//     <div className={classes.root}>
-//       <GridList cellHeight={200} className={classes.gridList} cols={6}>
-//           {display.map((tile) => <GridListTile key={tile.img} cols={1.5}>
-//             <img src={tile.img} alt={tile.title}/>
-//             <GridListTileBar title={tile.title} subtitle={tile.subtitle}/>
-//           </GridListTile>)}
-//       </GridList>
-//     </div>
-//   )
-
-//   return (
-//     <React.Fragment>
-//       <Grid container spacing={6} style={{marginTop: 20, marginBottom: 70}} direction='column'>
-//         <Grid item>
-//           <Element name='Misc' />
-//           <Typography id='Misc' paragraph variant='h4'>Miscellaneous</Typography>
-//           <Typography paragraph>
-//             In my free time
-//           </Typography>
-//         </Grid>
+  return (
+    <React.Fragment>
+      <Grid container spacing={6} style={{marginTop: 20, marginBottom: 70}} direction='column'>
+        <Grid item>
+          <Element name='Misc' />
+          <Typography id='Misc' variant='h4'>Miscellaneous</Typography>
+          <Divider style={{marginBottom: 30}}/>
+          <Typography>
+            Just for fun, here's some stuff I've been listening to lately.
+          </Typography>
+        </Grid>
         
-//         {/* <Grid item>
-//           {makeGallery(albums)}
-//           {makeGallery(artists)}
-//         </Grid> */}
+        <Grid item>
+          {makeGallery(albums)}
+        </Grid>
         
-//       </Grid>
-//     </React.Fragment>
-//   )
-// }
+      </Grid>
+    </React.Fragment>
+  )
+}
 
-class App extends Component {
+const drawerWidth = 300;
+const maxDrawerWidth = 500;
+
+const useSidebarStyles = makeStyles(theme => ({
+  drawer: {
+    width: drawerWidth,
+    maxWidth: maxDrawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+    maxWidth: maxDrawerWidth,
+    background: 'linear-gradient(180deg, rgba(66,30,176,1) 4%, rgba(14,0,79,1) 100%)',
+    //borderRight: "5px solid",
+    border: 0
+  },
+  img: {
+    paddingTop: "74%",
+    margin: 30,
+    marginBottom: 10,
+    borderRadius: '50%',
+    border: "2px solid white"
+  },
+  card: {
+    margin: 20,
+    padding: 5,
+    maxWidth: 300,
+    //height: "100%",
+    //borderRadius: 15,
+    //border: "5px solid",
+    background: 'rgba(0,0,0,0)',
+    height: 'calc(100% - 20px)'
+  },
+  primary: {
+    color: 'white',
+    fontSize: '18px',
+    fontFamily: 'Montserrat'
+  },
+  divider: {
+    backgroundColor: 'white',
+    marginTop: 25,
+    marginBottom: 10,
+    width: "75%",
+    margin: 'auto',
+    display: 'block'
+  }
+}));
+
+function Sidebar() {
+  const classes = useSidebarStyles();
+
+  const sections = ['Projects', 'Coursework', 'Misc'];
+
+  const generateButtons = (sections) => sections.map((section) => 
+    <ListItem button onClick={() => handleClick(section)}>
+      <ListItemIcon style={{color: 'white'}}><ArrowForwardIosIcon /></ListItemIcon>
+      <ListItemText classes={{primary: classes.primary}} primary={section}/>
+    </ListItem>)
+
+  return (
+    <React.Fragment>
+      <Drawer elevation={0} className={classes.drawer} variant='permanent' anchor='left'
+       classes={{paper: classes.drawerPaper}}> 
+        <Grid container justify='center'>
+          <Card elevation={0} variant='elevation' className={classes.card}>
+            <CardMedia className={classes.img} image={process.env.PUBLIC_URL + 'alexx.jpg'}/>
+            <Divider light={true} className={classes.divider} />
+            <CardContent>
+              <Grid container direction='column' spacing={3}>
+                <Grid item>
+                  <Typography variant='h6' style={{color: '#ffffff'}}>Hi! I'm Alex, a sophomore majoring in ECE @ CMU.</Typography>
+                </Grid>
+                <Grid item container justify='center' spacing={3}>
+                  <Grid item>
+                    <IconButton style={{transform: 'scale(1.2)'}} aria-label="Github" color='secondary'
+                     onClick={() => window.open('https://github.com/axie66/', "noopener,noreferrer")}>
+                      <GitHubIcon />
+                    </IconButton>
+                  </Grid>
+                  <Grid item>
+                    <IconButton style={{transform: 'scale(1.2)'}} color='secondary'
+                     onClick={() => window.open(process.env.PUBLIC_URL + 'resume.pdf', 'noopener,noreferrer')}>
+                      <Typography>CV</Typography>
+                    </IconButton>
+                  </Grid>
+                  <Grid item>
+                    <IconButton style={{transform: 'scale(1.2)'}} aria-label="LinkedIn" color='secondary'
+                     onClick={() => window.open('https://linkedin.com/in/axie', "noopener,noreferrer")}>
+                      <LinkedInIcon />
+                    </IconButton>
+                  </Grid>
+                </Grid>
+                <Grid item>
+                  <List>
+                    {generateButtons(sections)}
+                  </List>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Drawer>
+    </React.Fragment>
+  );
+}
+
+const useAppStyles = makeStyles(theme => ({
+  root: {
+    marginTop: 0,
+    flexGrow: 1,
+    padding: 30,
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - min(300px, ${maxDrawerWidth}px))`,
+      marginLeft: `min(300px, ${maxDrawerWidth}px)`, 
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      marginLeft: 0, 
+    },
+  },
+  center: {
+    textAlign: "center"
+  }
+}));
+
+function App() {
 
   // state = {
   //   greeting: "Welcome to my personal website!",
@@ -397,32 +629,55 @@ class App extends Component {
   //   clearInterval(this.interval);
   // }
 
-  render() {
-
     // const text = this.state.greeting.substring(0, this.state.index).split('\n').map(
     //   (item) => <div className='center' key={item}>{item}<br></br></div>
     // );
 
-    return (
-      <ThemeProvider theme={theme}>
-        <Container disableGutters={true}>
-          <TopBar></TopBar>
-          <Grid container spacing={0} style={{paddingTop:50}}>
-            <Grid item xs='auto' md={1}></Grid>
-            <Grid item xs={12} md={10}>
-              <Grid container direction='row' spacing={10}>
-                <AboutSection />
-                <CourseSection />
-                <ProjectSection />
-                {/* <MiscSection /> */}
-              </Grid>
-            </Grid>
-            <Grid item xs='auto' md={1}></Grid>
+  const classes = useAppStyles();
+  
+  return (
+    <ThemeProvider theme={theme}>
+      <Container disableGutters={true}>
+        {/* <TopBar /> */}
+        <Hidden smDown>
+          <Sidebar />
+        </Hidden>
+        <Hidden mdUp>
+          <AboutSection />
+        </Hidden>
+        <Grid container className={classes.root} direction='column' spacing={10}>
+          <Grid item>
+            <WelcomeSection />
           </Grid>
-        </Container>
-      </ThemeProvider>
-    );
-  }
+          <Grid item>
+            <ProjectSection />
+          </Grid>
+          <Grid item>
+            <CourseSection />
+          </Grid>
+          {/* <Grid item>
+            <MiscSection />
+          </Grid> */}
+        </Grid>
+        {/* <Grid container spacing={0} className={classes.root}>
+          <Grid item xs={12} md={10}>
+            <Grid container direction='row' spacing={10}>
+              <AboutSection />
+              <Grid container direction="column" className={classes.center}>
+                <Grid item>
+                  <Typography variant="h5">Site currently under construction, check back in later!</Typography>
+                </Grid>
+              </Grid>
+              <CourseSection />
+              <ProjectSection />
+              <MiscSection />
+            </Grid>
+          </Grid>
+          <Grid item xs={'auto'} md={1}></Grid>
+        </Grid> */}
+      </Container>
+    </ThemeProvider>
+  );
 }
 
 export default App;
