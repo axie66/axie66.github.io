@@ -32,9 +32,6 @@ const theme = createMuiTheme({
 });
 
 function handleClick(id) {
-  // var elem = document.getElementById(id)
-  // if(elem) elem.scrollIntoView();
-    //console.log(document.getElementById(id).getBoundingClientRect())
   scroller.scrollTo(id, {
     duration: 800,
     delay: 0,
@@ -347,13 +344,6 @@ function CourseSection(props) {
   )
 }
 
-
-// const useSectionStyles = makeStyles({
-//   root: {
-//     marginBottom: 50
-//   }
-// })
-
 function ProjectSection(props) {
 
   return (
@@ -396,80 +386,7 @@ const useMiscStyles = makeStyles({
   },
 });
 
-const albums = [
-  {
-    img: 'https://lastfm.freetls.fastly.net/i/u/770x0/ce0cb937c169c4dc6a7b9aa9c65e751f.jpg#ce0cb937c169c4dc6a7b9aa9c65e751f',
-    title: 'Magnolia Electric Co.',
-    subtitle: 'Songs: Ohia',
-  },
-  {
-    img: 'https://lastfm.freetls.fastly.net/i/u/770x0/29c4c9fa6ec71315b6b64e1ca5c82211.jpg#29c4c9fa6ec71315b6b64e1ca5c82211',
-    title: "Didn't It Rain",
-    subtitle: 'Songs: Ohia'
-  },
-  {
-    img: 'https://lastfm.freetls.fastly.net/i/u/770x0/e764090489a84d2b9717830a4d26cf57.jpg#e764090489a84d2b9717830a4d26cf57',
-    title: 'Give Up',
-    subtitle: 'The Postal Service'
-  },
-  {
-    img: 'https://lastfm.freetls.fastly.net/i/u/770x0/01bcdbc62f77f9011cb80acb9eada9bc.jpg#01bcdbc62f77f9011cb80acb9eada9bc',
-    title: 'An Overview on Phenomenal Nature',
-    subtitle: 'Cassandra Jenkins'
-  },
-  {
-    img: 'https://lastfm.freetls.fastly.net/i/u/770x0/5495521a59f49db169b74cbf7332b8b5.jpg#5495521a59f49db169b74cbf7332b8b5',
-    title: 'Kaputt',
-    subtitle: 'Destroyer'
-  },
-  {
-    img: 'https://lastfm.freetls.fastly.net/i/u/770x0/3e95950fb75249bec9fffd8f17b7bc24.jpg#3e95950fb75249bec9fffd8f17b7bc24',
-    title: '#1 Record',
-    subtitle: 'Big Star'
-  },
-  {
-    img: 'https://lastfm.freetls.fastly.net/i/u/770x0/7690aad2072f8a11b5ab9607e894a7e0.jpg#7690aad2072f8a11b5ab9607e894a7e0',
-    title: 'Tyron',
-    subtitle: 'slowthai'
-  }
-]
-
-function MiscSection(props) {
-  const classes = useMiscStyles();
-
-  const makeGallery = (display) => (
-    <div className={classes.root}>
-      <GridList cellHeight={200} className={classes.gridList} cols={6}>
-          {display.map((tile) => <GridListTile key={tile.img} cols={1.5}>
-            <img src={tile.img} alt={tile.title}/>
-            <GridListTileBar title={tile.title} subtitle={tile.subtitle}/>
-          </GridListTile>)}
-      </GridList>
-    </div>
-  )
-
-  return (
-    <React.Fragment>
-      <Grid container spacing={6} style={{marginTop: 20, marginBottom: 70}} direction='column'>
-        <Grid item>
-          <Element name='Misc' />
-          <Typography id='Misc' variant='h4'>Miscellaneous</Typography>
-          <Divider style={{marginBottom: 30}}/>
-          <Typography>
-            Just for fun, here's some stuff I've been listening to lately.
-          </Typography>
-        </Grid>
-        
-        <Grid item>
-          {makeGallery(albums)}
-        </Grid>
-        
-      </Grid>
-    </React.Fragment>
-  )
-}
-
-const drawerWidth = 300;
+const drawerWidth = 400;
 const maxDrawerWidth = 500;
 
 const useSidebarStyles = makeStyles(theme => ({
@@ -486,7 +403,7 @@ const useSidebarStyles = makeStyles(theme => ({
     border: 0
   },
   img: {
-    paddingTop: "74%",
+    paddingTop: "80%",
     margin: 30,
     marginBottom: 10,
     borderRadius: '50%',
@@ -496,9 +413,6 @@ const useSidebarStyles = makeStyles(theme => ({
     margin: 20,
     padding: 5,
     maxWidth: 300,
-    //height: "100%",
-    //borderRadius: 15,
-    //border: "5px solid",
     background: 'rgba(0,0,0,0)',
     height: 'calc(100% - 20px)'
   },
@@ -520,7 +434,7 @@ const useSidebarStyles = makeStyles(theme => ({
 function Sidebar() {
   const classes = useSidebarStyles();
 
-  const sections = ['Projects', 'Coursework', 'Misc'];
+  const sections = ['Projects', 'Coursework'];
 
   const generateButtons = (sections) => sections.map((section) => 
     <ListItem button onClick={() => handleClick(section)}>
@@ -595,44 +509,6 @@ const useAppStyles = makeStyles(theme => ({
 }));
 
 function App() {
-
-  // state = {
-  //   greeting: "Welcome to my personal website!",
-  //   index: 31,
-  // }
-  
-  // onTimer = () => {
-  //   console.log(this.state.index)
-  //   let newIndex = this.state.index + 1;
-  //   const ignore = [' ', '\n'];
-  //   while(ignore.includes(this.state.greeting.charAt(newIndex))){
-  //     newIndex+=1;
-  //   }
-  //   this.setState(
-  //     (state) => ({
-  //       index: Math.min(newIndex, state.greeting.length)
-  //     })
-  //   );
-  //   if(this.state.index === this.state.greeting.length){
-  //     clearInterval(this.interval);
-  //     document.getElementById('content').style.display = 'block'
-  //   }
-  // }
-
-  // componentDidMount() {
-  //   this.interval = setInterval(() => this.onTimer(), 50);
-  //   document.getElementById('content').style.display = 'none'
-
-  // }
-
-  // componentWillUnmount() {
-  //   clearInterval(this.interval);
-  // }
-
-    // const text = this.state.greeting.substring(0, this.state.index).split('\n').map(
-    //   (item) => <div className='center' key={item}>{item}<br></br></div>
-    // );
-
   const classes = useAppStyles();
   
   return (
@@ -655,26 +531,7 @@ function App() {
           <Grid item>
             <CourseSection />
           </Grid>
-          {/* <Grid item>
-            <MiscSection />
-          </Grid> */}
         </Grid>
-        {/* <Grid container spacing={0} className={classes.root}>
-          <Grid item xs={12} md={10}>
-            <Grid container direction='row' spacing={10}>
-              <AboutSection />
-              <Grid container direction="column" className={classes.center}>
-                <Grid item>
-                  <Typography variant="h5">Site currently under construction, check back in later!</Typography>
-                </Grid>
-              </Grid>
-              <CourseSection />
-              <ProjectSection />
-              <MiscSection />
-            </Grid>
-          </Grid>
-          <Grid item xs={'auto'} md={1}></Grid>
-        </Grid> */}
       </Container>
     </ThemeProvider>
   );
