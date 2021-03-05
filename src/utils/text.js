@@ -1,6 +1,6 @@
 import React from 'react';
 
-const fpyl_text = (
+const fpylText = (
     <div>
         <p>
             A Python-based desktop application for <a href='https://fantasy.premierleague.com'>Fantasy Premier League</a>. 
@@ -16,7 +16,7 @@ const fpyl_text = (
     </div>
 );
 
-const pyvm_text = (
+const pyvmText = (
     <div>
         <p>
             A virtual machine written in Python that runs Python! More
@@ -27,7 +27,7 @@ const pyvm_text = (
     </div>
 );
 
-const qc_text = (
+const qcText = (
     <div>
         <p>
             A short writeup on the basics of quantum cryptography and 
@@ -37,4 +37,4 @@ const qc_text = (
     </div>
 );
 
-export {fpyl_text, pyvm_text, qc_text};
+export {fpylText, pyvmText, qcText};
