@@ -16,13 +16,13 @@
   
   
   <url>
-    <loc>/projects/codeks.html</loc>
+    <loc>http://localhost:4000/projects/codeks.html</loc>
     
     
     <xhtml:link
                 rel="alternate"
                 hreflang=""
-                href="/projects/codeks.html"
+                href="http://localhost:4000/projects/codeks.html"
                 />
     
     
@@ -42,13 +42,13 @@
   
   
   <url>
-    <loc>/courses.html</loc>
+    <loc>http://localhost:4000/courses.html</loc>
     
     
     <xhtml:link
                 rel="alternate"
                 hreflang=""
-                href="/courses.html"
+                href="http://localhost:4000/courses.html"
                 />
     
     
@@ -68,13 +68,13 @@
   
   
   <url>
-    <loc>/projects/decoder-image-cap.html</loc>
+    <loc>http://localhost:4000/projects/decoder-image-cap.html</loc>
     
     
     <xhtml:link
                 rel="alternate"
                 hreflang=""
-                href="/projects/decoder-image-cap.html"
+                href="http://localhost:4000/projects/decoder-image-cap.html"
                 />
     
     
@@ -94,13 +94,13 @@
   
   
   <url>
-    <loc>/projects/fpyl.html</loc>
+    <loc>http://localhost:4000/projects/fpyl.html</loc>
     
     
     <xhtml:link
                 rel="alternate"
                 hreflang=""
-                href="/projects/fpyl.html"
+                href="http://localhost:4000/projects/fpyl.html"
                 />
     
     
@@ -120,13 +120,13 @@
   
   
   <url>
-    <loc>/</loc>
+    <loc>http://localhost:4000/</loc>
     
     
     <xhtml:link
                 rel="alternate"
                 hreflang=""
-                href="/"
+                href="http://localhost:4000/"
                 />
     
     
@@ -148,13 +148,13 @@
   
   
   <url>
-    <loc>/projects/neural-rd.html</loc>
+    <loc>http://localhost:4000/projects/neural-rd.html</loc>
     
     
     <xhtml:link
                 rel="alternate"
                 hreflang=""
-                href="/projects/neural-rd.html"
+                href="http://localhost:4000/projects/neural-rd.html"
                 />
     
     
@@ -174,43 +174,43 @@
   
   
   <url>
-    <loc>/projects.html</loc>
+    <loc>http://localhost:4000/projects.html</loc>
     
     
     <xhtml:link
                 rel="alternate"
                 hreflang=""
-                href="/projects/codeks.html"
+                href="http://localhost:4000/projects/codeks.html"
                 />
     
     <xhtml:link
                 rel="alternate"
                 hreflang=""
-                href="/projects/decoder-image-cap.html"
+                href="http://localhost:4000/projects/decoder-image-cap.html"
                 />
     
     <xhtml:link
                 rel="alternate"
                 hreflang=""
-                href="/projects/fpyl.html"
+                href="http://localhost:4000/projects/fpyl.html"
                 />
     
     <xhtml:link
                 rel="alternate"
                 hreflang=""
-                href="/projects/neural-rd.html"
+                href="http://localhost:4000/projects/neural-rd.html"
                 />
     
     <xhtml:link
                 rel="alternate"
                 hreflang=""
-                href="/projects.html"
+                href="http://localhost:4000/projects.html"
                 />
     
     <xhtml:link
                 rel="alternate"
                 hreflang=""
-                href="/projects/quantum-crypto.html"
+                href="http://localhost:4000/projects/quantum-crypto.html"
                 />
     
     
@@ -230,13 +230,13 @@
   
   
   <url>
-    <loc>/projects/quantum-crypto.html</loc>
+    <loc>http://localhost:4000/projects/quantum-crypto.html</loc>
     
     
     <xhtml:link
                 rel="alternate"
                 hreflang=""
-                href="/projects/quantum-crypto.html"
+                href="http://localhost:4000/projects/quantum-crypto.html"
                 />
     
     

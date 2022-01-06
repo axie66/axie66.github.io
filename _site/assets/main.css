@@ -38,7 +38,10 @@ body {
   @media (max-width: 45em) {
     body {
       font-size: 1.1rem;
-      line-height: 2rem; } }
+      line-height: 2rem; }
+      body .column {
+        margin: auto;
+        width: 100%; } }
 
 /**
  * Set `margin-bottom` to maintain vertical rhythm
@@ -77,7 +80,10 @@ figure {
     @media (max-width: 45em) {
       figure figcaption {
         font-size: 0.85rem;
-        line-height: 1.6rem; } }
+        line-height: 1.6rem; }
+        figure figcaption .column {
+          margin: auto;
+          width: 100%; } }
 
 img {
   vertical-align: middle;
@@ -126,7 +132,10 @@ h1, h2 {
   @media (max-width: 45em) {
     h1, h2 {
       font-size: 2.148rem;
-      line-height: 2.6851rem; } }
+      line-height: 2.6851rem; }
+      h1 .column, h2 .column {
+        margin: auto;
+        width: 100%; } }
 
 h2 {
   font-size: 2.111rem;
@@ -138,7 +147,10 @@ h2 {
   @media (max-width: 45em) {
     h2 {
       font-size: 1.719rem;
-      line-height: 1.3224em; } }
+      line-height: 1.3224em; }
+      h2 .column {
+        margin: auto;
+        width: 100%; } }
 
 h3 {
   font-family: "PT Serif", serif; }
@@ -157,7 +169,10 @@ h3 {
   @media (max-width: 45em) {
     h3 {
       font-size: 1.375rem;
-      line-height: 2.0319rem; } }
+      line-height: 2.0319rem; }
+      h3 .column {
+        margin: auto;
+        width: 100%; } }
 
 h4 {
   font-size: 1.333rem;
@@ -169,7 +184,10 @@ h4 {
   @media (max-width: 45em) {
     h4 {
       font-size: 1.233rem;
-      line-height: 1.7329rem; } }
+      line-height: 1.7329rem; }
+      h4 .column {
+        margin: auto;
+        width: 100%; } }
 
 /**
  * Links
@@ -199,7 +217,10 @@ blockquote {
   @media (max-width: 45em) {
     blockquote {
       font-size: 0.95rem;
-      line-height: 1.84rem; } }
+      line-height: 1.84rem; }
+      blockquote .column {
+        margin: auto;
+        width: 100%; } }
   blockquote > :last-child {
     margin-bottom: 0; }
 
@@ -219,7 +240,11 @@ li code {
     p code,
     li code {
       font-size: 0.85rem;
-      line-height: 1.6rem; } }
+      line-height: 1.6rem; }
+      p code .column,
+      li code .column {
+        margin: auto;
+        width: 100%; } }
 
 pre {
   display: block;
@@ -236,7 +261,10 @@ pre {
   @media (max-width: 45em) {
     pre {
       font-size: 0.85rem;
-      line-height: 1.6rem; } }
+      line-height: 1.6rem; }
+      pre .column {
+        margin: auto;
+        width: 100%; } }
 
 /**
  * Table
@@ -253,7 +281,10 @@ table {
   @media (max-width: 45em) {
     table {
       font-size: 0.95rem;
-      line-height: 1.84rem; } }
+      line-height: 1.84rem; }
+      table .column {
+        margin: auto;
+        width: 100%; } }
   table th {
     border-bottom: 1px solid #111;
     padding: 5px; }
@@ -284,7 +315,10 @@ hr {
   @media (max-width: 45em) {
     hr {
       font-size: 0.95rem;
-      line-height: 1.84rem; } }
+      line-height: 1.84rem; }
+      hr .column {
+        margin: auto;
+        width: 100%; } }
 
 /**
  * Wrapper
@@ -335,7 +369,10 @@ hr {
   @media (max-width: 45em) {
     .footnotes {
       font-size: 0.95rem;
-      line-height: 1.84rem; } }
+      line-height: 1.84rem; }
+      .footnotes .column {
+        margin: auto;
+        width: 100%; } }
 
 /**
  * Forms
@@ -355,7 +392,10 @@ form input {
   @media (max-width: 45em) {
     form input {
       font-size: 0.95rem;
-      line-height: 1.84rem; } }
+      line-height: 1.84rem; }
+      form input .column {
+        margin: auto;
+        width: 100%; } }
   form input[type=email]:focus {
     border-color: #421eb0; }
   form input[type=submit]:hover {
@@ -431,7 +471,10 @@ form input {
   @media screen and (max-width: 700px) and (max-width: 45em) {
     .site-header .lang-selector {
       font-size: 0.95rem;
-      line-height: 1.84rem; } }
+      line-height: 1.84rem; }
+      .site-header .lang-selector .column {
+        margin: auto;
+        width: 100%; } }
     @media screen and (max-width: 700px) {
         .site-header .lang-selector .lang-intro {
           display: inline-block; }
@@ -580,7 +623,10 @@ form input {
   @media (max-width: 45em) {
     .site-footer {
       font-size: 0.85rem;
-      line-height: 1.6rem; } }
+      line-height: 1.6rem; }
+      .site-footer .column {
+        margin: auto;
+        width: 100%; } }
   .site-footer a {
     color: #3F3F3F; }
   .site-footer .footer-col {
@@ -670,7 +716,10 @@ form input {
   @media screen and (max-width: 700px) and (max-width: 45em) {
     .site-footer {
       font-size: 0.95rem;
-      line-height: 1.84rem; } }
+      line-height: 1.84rem; }
+      .site-footer .column {
+        margin: auto;
+        width: 100%; } }
 
 @media screen and (max-width: 500px) {
   .site-footer .footer-col-1,
@@ -746,7 +795,7 @@ form input {
   position: relative;
   width: 100vw;
   left: calc(-50vw + 50%);
-  margin-bottom: 50px;
+  margin-bottom: 20px;
   overflow-y: hidden; }
   @media screen and (max-width: 700px) {
     .post-header .post-meta {
@@ -807,7 +856,10 @@ form input {
     @media (max-width: 45em) {
       .post-content .footnotes {
         font-size: 0.95rem;
-        line-height: 1.84rem; } }
+        line-height: 1.84rem; }
+        .post-content .footnotes .column {
+          margin: auto;
+          width: 100%; } }
     @media screen and (max-width: 700px) {
       .post-content .footnotes p {
         margin-bottom: 12.5px; } }
@@ -829,7 +881,10 @@ form input {
   @media (max-width: 45em) {
     .post-author {
       font-size: 0.85rem;
-      line-height: 1.6rem; } }
+      line-height: 1.6rem; }
+      .post-author .column {
+        margin: auto;
+        width: 100%; } }
   .post-author .user-picture {
     float: left;
     width: 20%;
@@ -852,7 +907,10 @@ form input {
   @media (max-width: 45em) {
     .colored-block {
       font-size: 0.95rem;
-      line-height: 1.84rem; } }
+      line-height: 1.84rem; }
+      .colored-block .column {
+        margin: auto;
+        width: 100%; } }
 
 /**
  * About
@@ -895,7 +953,10 @@ form input {
   @media (max-width: 45em) {
     .about-col-1 {
       font-size: 0.85rem;
-      line-height: 1.6rem; } }
+      line-height: 1.6rem; }
+      .about-col-1 .column {
+        margin: auto;
+        width: 100%; } }
   .about-col-1 .user-picture {
     margin-bottom: 0; }
 
@@ -911,7 +972,10 @@ form input {
   @media (max-width: 45em) {
     .about-col-2 {
       font-size: 0.95rem;
-      line-height: 1.84rem; } }
+      line-height: 1.84rem; }
+      .about-col-2 .column {
+        margin: auto;
+        width: 100%; } }
   .about-col-2 h1 {
     margin-top: 0; }
 
@@ -926,7 +990,10 @@ form input {
   @media screen and (max-width: 700px) and (max-width: 45em) {
     .about-col {
       font-size: 1.1rem;
-      line-height: 2rem; } }
+      line-height: 2rem; }
+      .about-col .column {
+        margin: auto;
+        width: 100%; } }
 
 @media screen and (max-width: 500px) {
   .about-col {
@@ -942,7 +1009,10 @@ form input {
   @media screen and (max-width: 500px) and (max-width: 45em) {
     .about-col {
       font-size: 1.1rem;
-      line-height: 2rem; } }
+      line-height: 2rem; }
+      .about-col .column {
+        margin: auto;
+        width: 100%; } }
 
 @media screen and (max-width: 500px) {
   .about-col-1 {
@@ -969,7 +1039,10 @@ form input {
     @media (max-width: 45em) {
       .msg-404 .title {
         font-size: 2.148rem;
-        line-height: 2.6851rem; } }
+        line-height: 2.6851rem; }
+        .msg-404 .title .column {
+          margin: auto;
+          width: 100%; } }
   .msg-404 .description {
     font-size: 2.111rem;
     line-height: 2.5332rem;
@@ -981,7 +1054,10 @@ form input {
     @media (max-width: 45em) {
       .msg-404 .description {
         font-size: 1.719rem;
-        line-height: 1.3224em; } }
+        line-height: 1.3224em; }
+        .msg-404 .description .column {
+          margin: auto;
+          width: 100%; } }
 
 .no-version {
   cursor: default; }
@@ -1026,7 +1102,7 @@ form input {
   margin: auto; }
 
 .less-margin {
-  margin-top: -50px;
+  margin-top: -30px;
   margin-bottom: -50px; }
 
 /* Clear floats after the columns */

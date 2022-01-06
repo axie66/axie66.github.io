@@ -75,6 +75,11 @@ $breakpoint-small: 45em;
   @media (max-width: $breakpoint-small) {
     font-size: map-get($type-scale-small, $level);
     line-height: map-get($type-line-medium, $level);
+
+    .column {
+      margin: auto;
+      width: 100%;
+    }
   }
 }
 

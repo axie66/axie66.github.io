@@ -559,7 +559,7 @@
   position: relative;
   width: 100vw;
   left: calc(-50vw + 50%);
-  margin-bottom: $spacing-unit;
+  margin-bottom: $spacing-unit * 0.4;
   overflow-y: hidden;
 
   @include media-query($on-laptop) {
@@ -856,8 +856,8 @@
 }
 
 .less-margin {
-  margin-top: -50px;
-  margin-bottom: -50px;
+  margin-top: $spacing_unit * -0.6;
+  margin-bottom: $spacing-unit * -1;
 }
 
 /* Clear floats after the columns */
