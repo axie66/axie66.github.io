@@ -1,0 +1,4 @@
+*.gem
+*.sh
+.bundle
+.sass-cache

@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <title>An Introduction to Quantum Cryptography | 
+  Alex Xie
+</title>
+  
+
+  
+  <meta name="description" content="
+  
+">
+  
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="/projects/quantum-crypto.html">
+  <link rel="alternate" type="application/rss+xml" title="
+  Alex Xie
+" href="/feed.xml">
+
+  
+  
+  <meta name="theme-color" content="#ffffff">
+
+  
+
+  
+
+  
+
+  
+
+  
+</head>
+
+
+
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+
+    <div class="site-header-float">
+    
+
+
+
+<a class="site-title" href="
+
+
+
+
+/
+">
+  
+    
+  Alex Xie
+
+  
+</a>
+
+    
+
+    
+    <nav class="site-nav">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger">
+        
+
+<span class="nav-list-title">Menu:</span>
+<ul class="nav-list ">
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+  
+
+
+
+
+
+  
+  
+  <li><a class="page-link" href="/courses.html">Coursework</a></li>
+  
+  
+
+
+
+  
+  
+  <li><a class="page-link" href="/projects.html">Projects</a></li>
+  
+  
+
+
+</ul>
+
+      </div>
+    </nav>
+    
+    </div>
+
+    
+    
+
+  </div>
+
+</header>
+
+
+    
+    <main class="post-content" aria-label="Content">
+    
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+  <header class="post-header">
+  
+  
+  <div class="wrapper">
+    <h1 class="post-title" itemprop="name headline">An Introduction to Quantum Cryptography</h1>
+    <p class="post-meta">
+      <time datetime="" itemprop="datePublished">
+        
+
+  
+
+
+      </time>
+      <!-- 
+
+
+
+
+
+  
+  
+
+  
+    <span class="last-update">·
+
+    
+
+    last updated on
+    
+
+  Jan 5, 2022
+
+
+
+    
+
+    </span>
+  
+
+
+
+ -->
+      
+    </p>
+    <h3 class="post-summary"></h3>
+  </div>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <div class="center less-margin">
+<img src="../assets/images/qc/img.png" width="300px" />
+</div>
+
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+  <li><a href="#intro">Introduction</a></li>
+  <li><a href="#primer">Quantum Physics Primer</a>
+    <ol>
+      <li><a href="#polar">Photon Polarization</a></li>
+      <li><a href="#photons">Measuring Photons</a></li>
+      <li><a href="#uncertainty">The Uncertainty Principle</a></li>
+    </ol>
+  </li>
+  <li><a href="#qkd">Quantum Key Distribution and Quantum Encryption</a>
+    <ol>
+      <li><a href="#bb84">BB84</a>
+        <ol>
+          <li><a href="#bb84sec">Analysis of Security</a></li>
+        </ol>
+      </li>
+      <li><a href="#b92">B92</a></li>
+      <li><a href="#kak">Kak’s Three-Stage Protocol</a>
+        <ol>
+          <li><a href="#kaksec">Analysis of Security</a></li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+  <li><a href="#demo">Qiskit Demo of QKD Protocols</a></li>
+</ol>
+
+<h2 id="1-introduction-">1. Introduction <a name="intro"></a></h2>
+
+<p>Most modern cryptographic protocols rely on the computational hardness of certain problems. Diffie-Hellman key exchange, for example, depends on the hardness of the discrete log problem, while RSA depends on the difficulty of the integer factorization problem. While these assumptions have held so far, with quantum computers on the horizon, they may not hold for much longer. As such, it is of the utmost importance that we find new protocols that rest their security on more solid foundations. In this article, we introduce a set of quantum cryptography protocols that derive their security not from any assumptions of computational hardness, but from quantum mechanics itself.</p>
+
+<h2 id="2-quantum-physics-primer-">2. Quantum Physics Primer <a name="primer"></a></h2>
+
+<p>We first cover (non-rigorously) some of the fundamental quantum properties involved in quantum cryptography.</p>
+
+<h3 id="21-photon-polarization-">2.1 Photon Polarization <a name="polar"></a></h3>
+
+<p>If you’ve ever worn sunglasses or watched a 3D movie, then you’ve seen polarization firsthand. In classical physics, the polarization of a wave is the direction in which it oscillates (this direction is perpendicular to the direction of the wave’s motion). Further, a waveform with multiple polarizations can be <em>polarized</em>, that is, made to have a single polarization, by a filter, which operates by absorbing the components perpendicular to its orientation and passing the components parallel to it. As light is considered a wave in classical physics, it has a polarization, and unpolarized light can be polarized – for example, sunlight is polarized by the lenses of sunglasses.</p>
+
+<p>In the quantum realm, polarization of light waves has an analogue in photon polarization. The polarization of a photon is a quantum system with a qubit degree of freedom, and hence we can represent it much like how we represent electron spin. Recall that we express the spin of an electron as a superposition of $\ket{0}$ and $\ket{1}$, the "spin up" and "spin down" basis states. Similarly, we can express the polarization of a photon as a superposition of $\ket{0}$ and $\ket{1}$, where we redefine $\ket{0}$ and $\ket{1}$ to represent the horizontal and vertical photon polarization states.</p>
+
+<div class="card">
+<div class="text">
+<b>Theorem:</b> Let the state vector $\ket{\phi}$ represent the polarization of a photon. Then for some complex $\alpha_0, \alpha_1$,
+$$
+    \ket{\phi} = \alpha_0\ket{0} + \alpha_1\ket{1}
+$$
+where $\alpha_0^2 + \alpha_1^2 = 1$.
+</div>
+</div>
+<p />
+
+<p>More generally, we can represent photon polarization as a superposition of any pair of orthogonal basis states (including but not limited to $\ket{0}$ and $\ket{1}$. For our quantum cryptography applications, we will consider two such pairs: the rectilinear basis and the diagonal basis.</p>
+
+<p>The rectilinear basis consists of the horizontally (0°) and vertically (90°) polarized states, denoted $\ket{H}$ and $\ket{V}$ respectively, where</p>
+
+<div class="center">
+$$\ket{H} = \ket{0} = 
+    \begin{pmatrix}
+        1 \\
+        0
+    \end{pmatrix}
+$$
+$$\ket{V} = \ket{1} = 
+    \begin{pmatrix}
+        0 \\
+        1
+    \end{pmatrix}
+$$
+</div>
+
+<p>Meanwhile, the diagonal basis consists of the diagonally (45°) and anti-diagonally (135°) polarized states, $\ket{D}$ and $\ket{A}$, where</p>
+
+<div class="center">
+$$\ket{D} = \frac{1}{\sqrt{2}}\ket{0} + \frac{1}{\sqrt{2}}\ket{1} =
+        \begin{pmatrix}
+            \frac{1}{\sqrt{2}} \\
+            \frac{1}{\sqrt{2}}
+        \end{pmatrix}
+$$
+$$\ket{A} = \frac{1}{\sqrt{2}}\ket{0} - \frac{1}{\sqrt{2}}\ket{1} =
+        \begin{pmatrix}
+            \frac{1}{\sqrt{2}} \\
+            -\frac{1}{\sqrt{2}}
+        \end{pmatrix}
+$$
+</div>
+
+<p>As a sidenote, generally, we can express the state of a photon polarized at an angle of $\theta$ degrees from the positive x-axis as</p>
+
+\[\cos(\theta)\ket{0} + \sin(\theta)\ket{1} = \begin{pmatrix}
+    \cos(\theta) \\
+    \sin(\theta)
+\end{pmatrix}\]
+
+<h3 id="22-measuring-photons-">2.2 Measuring Photons <a name="photons"></a></h3>
+
+<p>It is important to note that by the uncertainty principle (discussed in the next section) it is impossible to directly measure the polarization of a photon. That is, given some photon with polarization state $\ket{\psi} = \cos(\theta) \cdot \ket{0} + \sin(\theta) \cdot \ket{1}$, we cannot physically determine $\theta$.</p>
+
+<p>However, what we can measure is a photon’s polarization through a filter. Like a classical filter for a light wave, a photon filter passes a photon polarized parallel to its orientation and absorbs a photon polarized perpendicular to it. Alternatively, a polarizing beam splitting filter can be made to send parallel photons in one direction and perpendicular photons in another, thus distinguishing between the two. Note that from this point onward, we will assume all our filters behave like this.</p>
+
+<p>Interestingly however, a photon that is not initially parallel or perpendicular to a filter’s orientation will be probabilistically projected into one of those two directions. Thus, a photon always emerges from a filter with polarization parallel or perpendicular to the filter’s orientation.</p>
+
+<div class="card">
+<div class="text">
+<b>Theorem:</b> If a photon polarized at an angle of $\alpha$ is sent into a filter oriented at an angle of $\beta$, it will have probability $\cos^2(\alpha - \beta)$ of becoming polarized parallel to the filter and complementary probability $\sin^2(\alpha - \beta)$ of becoming polarized perpendicular to the filter.
+</div>
+</div>
+<p />
+
+<p>For our purposes, we will consider two orientations of filters which correspond to the two bases we discussed in the previous section, rectilinear and diagonal. As you might expect, the rectilinear filter is oriented at an angle of 0°, while the diagonal filter is oriented at an angle of 45°.</p>
+
+<p>Observe that if we send a photon polarized 0° or 90° (i.e. one of the rectilinear basis states) into a rectilinear filter, the photon emerges unchanged with probability 1, so the outcome is deterministic. Likewise, if we send a photon whose polarization is one of the diagonal basis states into a diagonal filter, the photon’s polarization does not change. However, if we send a photon polarized 45° (or 135°) into a rectilinear filter, then by the above theorem, there is a 50-50 chance of observing a 0° or 90° polarized photon. The same holds for diagonal filters and the rectilinear polarization states.</p>
+
+<div class="center">
+    <img src="../assets/images/qc/filter2.png" width="500px" />
+    <p><b>Figure 1:</b> Behavior of rectilinear and diagonal filters</p>
+</div>
+
+<h3 id="23-the-uncertainty-principle-">2.3 The Uncertainty Principle <a name="uncertainty"></a></h3>
+
+<p>At the core of quantum cryptography and its guarantees of security is the uncertainty principle. In layman’s terms, it is as follows:</p>
+
+<div class="card">
+<div class="text">
+<b>Theorem:</b> In a quantum system, only one property of a pair of conjugate properties can be known with certainty.<a id="ref:unc" href="#fn:unc">$^1$</a>
+</div>
+</div>
+<p />
+
+<p>For brevity, we won’t go into the meaning of <em>conjugate</em> properties – what is important is that photon polarization is one such property. Hence, we can make the following statement:</p>
+
+<div class="card">
+<div class="text">
+<b>Corollary:</b> It is not possible to determine simultaneously a photon's rectilinear and diagonal polarizations.
+</div>
+</div>
+<p />
+
+<p>Note that this fact is illustrated by the results of the previous section. We might try, for instance, to determine both polarizations of a photon by passing it through a rectilinear filter followed by a diagonal filter. However, measuring a photon with a rectilinear filter yields a photon whose polarization is one of the rectilinear basis states, destroying all information about the original polarization of the photon (unless the original photon’s polarization was one of the rectilinear basis states). Thus, the diagonal filter will give us no meaningful information about the original photon’s diagonal polarization.</p>
+
+<p>An alternative strategy might be to take the photon and "copy-paste" its polarization state onto other photons, then perform measurements on these photons. This, however, is banned by the no-cloning theorem, which follows from the uncertainty principle. It is as follows:</p>
+
+<div class="card">
+<div class="text">
+<b>Theorem:</b> It is not possible to create identical copies of an arbitrary quantum state.<a id="ref:unc" href="#fn:unc">$^1$</a>
+</div>
+</div>
+<p />
+
+<p id="fn:unc">
+    <a href="#ref:unc">$^1$</a> Taken from 
+        <a href="https://www.cse.wustl.edu/~jain/cse571-07/ftp/quantum/">
+        https://www.cse.wustl.edu/~jain/cse571-07/ftp/quantum/</a>
+</p>
+
+<h2 id="3-quantum-key-distribution-and-quantum-encryption">3. Quantum Key Distribution and Quantum Encryption</h2>
+<p><a name="qkd"></a></p>
+
+<p>Now that we have discussed some of the interesting properties of quantum systems and photons in particular, we will see how we can leverage them to perform key distribution.</p>
+
+<h3 id="31-bb84-">3.1 BB84 <a name="bb84"></a></h3>
+
+<p>Let’s say Annie and Britta want talk privately, but their computationally-unbounded frenemy Pierce is listening in on the conversation. To accomplish this, they decide to use one-time pad. However, they run into the issue of exchanging a secret key – with his computational power, Pierce can break Diffie-Helman! Fortunately, they have an alternative in the BB84 quantum key distribution protocol</p>
+
+<p>The BB84 protocol requires two public channels: a quantum channel over which Annie can send Britta random bits encoded as photons, and an authenticated conventional (i.e. non-quantum) channel over which Annie and Britta can later verify their results.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Bit</th>
+      <th style="text-align: center">Polarization Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">0</td>
+      <td style="text-align: center">0° or 45°</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">90° or 135°</td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="center"><b>Table 1:</b> BB84 Encoding Scheme</p>
+<p />
+
+<p>First, Annie generates $4n$ random bits, $n$ of which we expect will make it into the shared key, as we will soon see. Then, for each bit, she generates a polarized photon according to Table 1 (which is public knowledge), picking between the two polarization options at random, and sends the photon to Britta. Since Annie is the only one that knows the actual polarization of the photon, Britta simply picks independently and randomly between the rectilinear and diagonal filters to measure the photon. Britta records the result of the measurement (which corresponds to a bit, 0 or 1) as well as the filter used.</p>
+
+<p>After all photons have been received and measured by Britta, Annie announces in the conventional channel the basis each photon actually lies in. Observe that this gives no information about the bit itself: if Annie declares that a photon was diagonal, then its polarization could be either 45° or 135°, which corresponds to either a 0 or a 1; if Annie declares that it was rectilinear, its polarization could be either 0° or 90°.</p>
+
+<p>In response, Britta tells Annie via the conventional channel which photons she measured with the correct filter (note that she does not say what values/bits she actually measured). The bits corresponding to these photons must be shared between the two and are kept, while the remaining bits are random garbage produced from measuring with the wrong basis and are thrown away. It is not difficult to see that (assuming no errors in her measuring device) Britta can expect to get half of her filter choices correct and thus can expect to accurately receive $2n$ bits from Annie.</p>
+
+<p>Finally, Britta randomly chooses half of her bits to sacrifice and publishes them in the conventional channel. Annie compares these bits to her own. If the number of discrepancies is above a certain threshold, the two parties abort. Otherwise, the process is complete, and the remaining $n$ bits make up Annie and Britta’s shared secret key.</p>
+
+<h4 id="311-analysis-of-security-">3.1.1 Analysis of Security <a name="bb84sec"></a></h4>
+
+<p>To this point, we have ignored the presence of Pierce, who is attempting to steal their secret key and avoid being detected in the process. We will assume for simplicity that Pierce can only observe what is sent in the conventional channel, but he can interfere with the quantum channel.</p>
+
+<p>Suppose Pierce’s strategy is to intercept each photon from Annie, measure it with one of the two filters, then transmit the output of the filter to Britta. For any given photon, Pierce has a $\frac{1}{2}$ chance of picking the correct filter. If he does pick the correct filter, the photon will be passed onto Britta without modification, and he will avoid detection for that bit. However, if he picks the wrong filter, the photon will come out in the other basis. Thus, when Britta passes it through her filter (assuming she picks the right filter for the <em>original</em> photon), she will get a random result, with $\frac{1}{2}$ chance of getting the same bit as Annie and $\frac{1}{2}$ chance of getting a different bit. Hence, the probability that any given measurement by Pierce does not alter the bit measured by Britta (given that Britta measures with the correct filter) is $\frac{3}{4}$.</p>
+
+<p>Thus, when Annie and Britta publicly compare $n$ bits at the end of the protocol, the probability that all the bits match up is $(\frac{3}{4})^n$, which is exponentially small. Even if the two parties allow a certain margin of error, as $n$ grows large, the probability that Pierce continues to evade detection grows arbitrarily small.</p>
+
+<h3 id="32-b92-">3.2 B92 <a name="b92"></a></h3>
+
+<p>B92 is a simplified version of BB84 that is much easier to implement in practice. The main difference is that Annie now uses only two distinct polarization states, 0° for 0 bits and 45° for 1 bits.</p>
+
+<p>As before, Britta randomly picks a basis to measure the photon in. However, since there are only two states, Britta can make certain conclusions based on what she measures.</p>
+
+<p>Suppose Britta picks the rectilinear filter and measures a 90° photon. Then she can be sure that Annie sent a 45° photon. This is because the only other option, a 0° photon, would have emerged from the filter still with 0° polarization with probability 1 (see Section 2.2, in particular Figure 1). Similarly, if Britta picks the diagonal filter and measures a 135° photon, she can safely assume that Annie sent a 90° photon. Note however, that if Britta uses a rectilinear filter and observes a 0° photon, she cannot know the original polarization of the photon. The same goes if Britta uses a diagonal filter and observes a 45° photon. These results are summarized below.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Observed Polarization</th>
+      <th style="text-align: center">Original Polarization</th>
+      <th style="text-align: center">Bit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">90°</td>
+      <td style="text-align: center">45°</td>
+      <td style="text-align: center">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">135°</td>
+      <td style="text-align: center">0°</td>
+      <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">0°</td>
+      <td style="text-align: center">unknown</td>
+      <td style="text-align: center">unknown</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">45°</td>
+      <td style="text-align: center">unknown</td>
+      <td style="text-align: center">unknown</td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="center"><b>Table 2:</b> What the receiver learns from their observations</p>
+<p />
+
+<p>Due to this ability to determine bits solely based on observed polarizations, there is no longer a need for the two parties to exchange their lists of bases/filters used. Hence, after the photons have all been sent, they can proceed to the final step of comparing random bits and determining the error rate.</p>
+
+<p>It is important to note though, that if Annie sends a 45° photon, there is only a $\frac{1}{2}$ probability that Britta measures a 90° photon. The other half of the time, Britta measures a 0° photon and is unable to conclude the polarization of the photon. Thus, it turns out B92 is only half as efficient as B84 – this is the price we must pay for the simplicity of the protocol.</p>
+
+<h3 id="33-kaks-three-stage-protocol-">3.3 Kak’s Three-Stage Protocol <a name="kak"></a></h3>
+
+<p>Like the above two protocols, Kak’s protocol cleverly uses the uncertainty principle to facilitate secret communication. However, unlike the previous two, which were concerned solely with distributing a secret key, Kak’s protocol allows the two parties to transmit arbitrary data.</p>
+
+<p>At the start of the protocol, both parties separately generate their own secret key. This secret key takes the form of a photon rotation operator. Essentially, this is a system that takes in a photon and rotates its polarization by some fixed amount. Let $R(\theta)$ denote a rotation operator that rotates a photon by angle $\theta$. Mathematically, we can define $R(\theta)$ as the following:</p>
+
+\[R(\theta) = \begin{pmatrix}
+        \cos(\theta) &amp; -\sin(\theta) \\
+        \sin(\theta) &amp; \cos(\theta)
+    \end{pmatrix}\]
+
+<p>We can verify that a photon polarized at an angle of $\phi$ is indeed rotated by an angle of $\theta$ after being multiplied by $R(\theta)$:</p>
+
+\[\scriptsize{\begin{pmatrix}
+        \cos(\theta) &amp; -\sin(\theta) \\
+        \sin(\theta) &amp; \cos(\theta)
+    \end{pmatrix}\begin{pmatrix}
+        \cos(\phi) \\
+        \sin(\phi)
+    \end{pmatrix} = \begin{pmatrix}
+        \cos(\theta)\cos(\phi) - \sin(\theta)\sin(\phi) \\
+        \sin(\theta)\cos(\phi) + \cos(\theta)\sin(\phi)
+    \end{pmatrix} = \begin{pmatrix}
+        \cos(\theta + \phi) \\
+        \sin(\theta + \phi)
+    \end{pmatrix}}\]
+
+<p>Hence, at the start of the protocol, Alice picks some angle $\alpha$ and Bob picks some angle $\beta$, making their secret keys $U_A = R(\alpha)$ and $U_B = R(\beta)$, respectively.</p>
+
+<p>Also at the start, both parties publicly agree on an orthogonal basis (i.e. rectilinear) and agree to let one of the basis states represent a 0 bit and the other a 1 bit (i.e. they might decide $\ket{H}$ corresponds to 0 and $\ket{V}$ corresponds to 1).</p>
+
+<p>With these initial preparations completed, the protocol can begin in earnest. In the first stage, Alice encodes the (classical) bit she wants to send as a photon whose polarization state $X$ is the basis state previously agreed upon. She applies her secret key $U_A$ on $X$, altering the polarization state of the photon to $U_{A}X$, then sends the photon over to Bob.</p>
+
+<p>In the second stage, Bob applies his rotation operator $U_B$ on the photon from Alice, changing the polarization to $U_{B}U_{A}X$, then sends the photon back to Alice.</p>
+
+<p>In the third and final stage, Alice applies $U_{A}^+ = R(-\alpha)$, the inverse of $U_A$ (i.e. $U_A^{+}U_A = U_AU_{A}^+ = I$) on the photon. Since the rotation operators are commutative (i.e. rotating by $\alpha$ then $\beta$ must be equivalent to rotating by $\beta$ then $\alpha$), the polarization of the photon becomes:
+\[
+U_{A}^{+}U_{B}U_{A}X = U_{A}^{+}U_{A}U_{B}X = U_{B}X.
+\]
+This photon is sent back to Bob, who applies $U_{B}^{+} =  R(-\beta)$ on the photon, yielding $U_{B}^{+}U_{B}X = X$. Bob can now pass this photon through a rectilinear filter to determine its polarization and thus obtain the bit Alice encoded.</p>
+
+<div class="center">
+<img src="../assets/images/qc/kak.png" width="400px" />
+<p>The three stages of Kak's protocol. Figure reproduced from <i>A Three-Stage Quantum Cryptography Protocol</i> by Subhash Kak (2018)</p>
+</div>
+
+<h4 id="331-analysis-of-security-">3.3.1 Analysis of Security <a name="kaksec"></a></h4>
+
+<p>It turns out that Kak’s protocol provides (near) perfect security! Recall that it is not possible to directly measure the polarization of a photon. Thus, if at any stage of the protocol an adversary intercepts the photon, they can extract no meaningful information out of it.</p>
+
+<h2 id="4-qiskit-demo-of-qkd-protocols-">4. Qiskit Demo of QKD Protocols <a name="demo"></a></h2>
+
+<p>Linked below is an implementation of B92 and Kak’s protocol using the <a href="https://qiskit.org/">IBM Qiskit</a> simulation framework.</p>
+
+<div class="card clickable" onclick="location.href='https://github.com/axie66/QuantumCrypto/blob/master/quantum_protocols.py'">
+    <div class="center text">Code Demo</div>
+</div>
+
+  </div>
+
+  <!-- 
+<div class="colored-block">
+  
+  
+    Did you like that post?
+  
+
+  You can suscribe to the
+  <a href="/feed.xml">RSS feed</a>
+  
+
+  .
+</div>
+ -->
+
+  <!-- 
+  <div class="post-author">
+    
+      <a href="
+  
+">
+        <img class="user-picture" src="/assets/alexx.jpg" alt="Alex Xie">
+      </a>
+    
+      <ul class="user-info">
+        <li class="user-name">
+          Alex Xie
+        </li>
+        <li class="user-shortbio">
+  Computer Science student at Carnegie Mellon with interests in machine learning and NLP.
+</li>
+      </ul>
+  </div>
+   -->
+
+</article>
+
+      </div>
+    </main>
+
+    
+
+<footer class="site-footer">
+
+  <div class="wrapper">
+
+      <ul class="footer-col footer-col-1">
+        <li>
+          
+
+
+
+<a class="" href="
+
+
+
+
+/
+">
+  
+    
+  Alex Xie
+
+  
+</a>
+
+
+        <!-- 
+        <span class="author">
+          by
+          
+          Alex Xie
+          
+        </span>
+        </li>
+         -->
+
+        
+        <li>
+  Computer Science student at Carnegie Mellon with interests in machine learning and NLP.
+</li>
+        
+
+      </ul>
+
+      
+        
+<span class="contact-list-title">
+  Links :
+</span>
+<ul class="contact-list footer-col footer-col-2">
+  <!-- <li>
+    
+<a href="/feed.xml" title="RSS"><span class="icon icon--feed"><svg fill="#000000" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0h24v24H0z" fill="none"/>
+    <circle cx="6.18" cy="17.82" r="2.18"/>
+    <path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/>
+</svg>
+</span>
+  <span class="username">
+    RSS feed
+  </span>
+</a>
+
+
+  </li> -->
+
+  
+  <li>
+    <a href="mailto:alex.xie7734@gmail.com" title="Email"><span class="icon icon--email"><svg viewBox="0 0 24 24" width="16px" height="16px"><path fill="#828282" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+</span><span class="username">contact</span></span></a>
+
+  </li>
+  
+
+  
+  <li>
+    <a target="_blank" href="https://github.com/axie66" title="Github"><span class="icon icon--github"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">axie66</span></a>
+
+  </li>
+  
+
+  
+
+  
+  <li>
+    <a target="_blank" href="https://www.linkedin.com/in/axie" title="LinkedIn"><span class="icon icon--linkedin"><svg viewBox="0 0 24 24" width="16px" height="16px"><path fill="#828282" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+</span><span class="username">axie</span></a>
+
+  </li>
+  
+
+  
+
+</ul>
+
+      
+
+    <div class="bottom">
+
+      
+      
+
+      <div class="tech">
+        <a target="_blank" href="https://jekyllrb.com/">Jekyll</a> + <a target="_blank" href="https://github.com/gaalcaras/academic">Academic</a>
+        
+      </div>
+
+      <div class="legal">
+      ©
+      
+
+
+
+<a class="" href="
+
+
+
+
+/
+">
+  
+    
+  Alex Xie
+
+  
+</a>
+
+      
+      
+      
+      (-2022)
+      
+        <!-- by
+        <a target="_blank" href="
+  
+">Alex Xie</a>  -->
+      
+      
+     </div>
+    </div>
+
+  </div>
+</footer>
+
+
+<!-- for mathjax support -->
+<script type="text/javascript">
+  window.MathJax = {
+    tex: {
+      packages: ['base', 'ams', 'braket'],
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+    },
+    loader: {
+      load: ['ui/menu', '[tex]/ams', '[tex]/braket'],
+    },
+    
+  };
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<!-- <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    processEscapes: true,
+    packages: {'[+]': ['braket']}
+  },
+});
+</script> -->
+
+
+
+
+  </body>
+
+</html>
