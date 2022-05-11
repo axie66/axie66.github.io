@@ -16,6 +16,32 @@
   
   
   <url>
+    <loc>http://localhost:4000/projects/cloud-computing.html</loc>
+    
+    
+    <xhtml:link
+                rel="alternate"
+                hreflang=""
+                href="http://localhost:4000/projects/cloud-computing.html"
+                />
+    
+    
+    
+    <lastmod>2022-05-07T10:55:59-04:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    
+  </url>
+  
+  
+  
+
+  
+  
+  
+  
+  
+  <url>
     <loc>http://localhost:4000/projects/codeks.html</loc>
     
     
@@ -180,6 +206,12 @@
     <xhtml:link
                 rel="alternate"
                 hreflang=""
+                href="http://localhost:4000/projects/cloud-computing.html"
+                />
+    
+    <xhtml:link
+                rel="alternate"
+                hreflang=""
                 href="http://localhost:4000/projects/codeks.html"
                 />
     
@@ -211,6 +243,12 @@
                 rel="alternate"
                 hreflang=""
                 href="http://localhost:4000/projects/quantum-crypto.html"
+                />
+    
+    <xhtml:link
+                rel="alternate"
+                hreflang=""
+                href="http://localhost:4000/projects/slang.html"
                 />
     
     
@@ -250,6 +288,32 @@
   
   
 
+  
+
+  
+  
+  
+  
+  
+  <url>
+    <loc>http://localhost:4000/projects/slang.html</loc>
+    
+    
+    <xhtml:link
+                rel="alternate"
+                hreflang=""
+                href="http://localhost:4000/projects/slang.html"
+                />
+    
+    
+    
+    <lastmod>2022-05-07T11:18:06-04:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    
+  </url>
+  
+  
   
 
 

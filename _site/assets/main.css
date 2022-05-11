@@ -507,7 +507,8 @@ form input {
   font-weight: 300;
   line-height: 55px;
   letter-spacing: -1px;
-  margin-bottom: -5px; }
+  margin-bottom: -5px;
+  color: #421eb0; }
   .site-title, .site-title:visited {
     color: black; }
   .site-title:hover {
@@ -938,7 +939,8 @@ form input {
 
 .user-picture {
   border-radius: 50%;
-  max-width: calc(85%); }
+  max-width: calc(90%);
+  border: 3px solid #bfbfbf; }
 
 .about-col-1 {
   font-size: 1rem;
