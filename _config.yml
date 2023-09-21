@@ -6,7 +6,7 @@ author_display: true
 author: Alex Xie
 github_username: axie66
 linkedin_username: axie
-curriculum:
-  url: /assets/resume.pdf
+# curriculum:
+#   url: /assets/resume.pdf
 nb_posts_page: 10
 markdown: kramdown
