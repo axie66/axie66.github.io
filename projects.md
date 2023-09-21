@@ -2,6 +2,7 @@
 layout: post
 title: Projects
 order: 2
+invisible: true
 ---
 
 <div class='row'>

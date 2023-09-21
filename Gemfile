@@ -9,3 +9,5 @@ group :jekyll_plugins do
   gem 'jekyll-livereload'
   gem 'jekyll-last-modified-at'
 end
+
+gem "webrick", "~> 1.8"

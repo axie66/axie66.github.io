@@ -9,10 +9,13 @@ layout: default
     <img class="user-picture" src="/assets/images/alexx.jpg" alt="{{ site.author }}">
     {% endif %}
 
-    <ul class="contact-list">
+    <ul class="contact-list contact-list-1">
       {% if site.email %}
       <li>
-        {% include _icons/email.html username=site.email %}
+        <span class="icon icon--email">
+          {% include _icons/email.svg %}
+        </span>
+        <span class="username">alexx at scs dot cmu dot edu</span>
       </li>
       {% endif %}
 

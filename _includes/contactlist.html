@@ -7,11 +7,17 @@
     {% include _icons/rss.html %}
   </li> -->
 
-  {% if site.email %}
+  <!-- {% if site.email %}
   <li>
     {% include _icons/email.html username=site.email %}
   </li>
-  {% endif %}
+  {% endif %} -->
+  <li>
+    <span class="icon icon--email">
+      {% include _icons/email.svg %}
+    </span>
+    <span class="username">alexx at scs dot cmu dot edu</span>
+  </li>
 
   {% if site.github_username %}
   <li>
