@@ -212,16 +212,16 @@ blockquote {
   color: #3F3F3F;
   padding-left: 25px;
   padding-right: 50px;
-  font-size: 0.95rem;
-  line-height: 1.52rem; }
+  font-size: 0.85rem;
+  line-height: 1.36rem; }
   @media (max-width: 75em) {
     blockquote {
-      font-size: 0.95rem;
-      line-height: 1.52rem; } }
+      font-size: 0.85rem;
+      line-height: 1.36rem; } }
   @media (max-width: 45em) {
     blockquote {
-      font-size: 0.95rem;
-      line-height: 1.52rem; }
+      font-size: 0.85rem;
+      line-height: 1.36rem; }
       blockquote .column {
         margin: auto;
         width: 100%; } }
@@ -276,16 +276,16 @@ pre {
 table {
   margin: auto;
   border-collapse: collapse;
-  font-size: 0.95rem;
-  line-height: 1.52rem; }
+  font-size: 0.85rem;
+  line-height: 1.36rem; }
   @media (max-width: 75em) {
     table {
-      font-size: 0.95rem;
-      line-height: 1.52rem; } }
+      font-size: 0.85rem;
+      line-height: 1.36rem; } }
   @media (max-width: 45em) {
     table {
-      font-size: 0.95rem;
-      line-height: 1.52rem; }
+      font-size: 0.85rem;
+      line-height: 1.36rem; }
       table .column {
         margin: auto;
         width: 100%; } }
@@ -310,16 +310,16 @@ hr {
   padding-left: 10%;
   border: none;
   border-top: 1px dashed #3F3F3F;
-  font-size: 0.95rem;
-  line-height: 1.52rem; }
+  font-size: 0.85rem;
+  line-height: 1.36rem; }
   @media (max-width: 75em) {
     hr {
-      font-size: 0.95rem;
-      line-height: 1.52rem; } }
+      font-size: 0.85rem;
+      line-height: 1.36rem; } }
   @media (max-width: 45em) {
     hr {
-      font-size: 0.95rem;
-      line-height: 1.52rem; }
+      font-size: 0.85rem;
+      line-height: 1.36rem; }
       hr .column {
         margin: auto;
         width: 100%; } }
@@ -363,17 +363,17 @@ hr {
  * Footnotes
  */
 .footnotes {
-  font-size: 0.95rem;
-  line-height: 1.52rem;
+  font-size: 0.85rem;
+  line-height: 1.36rem;
   color: #3F3F3F; }
   @media (max-width: 75em) {
     .footnotes {
-      font-size: 0.95rem;
-      line-height: 1.52rem; } }
+      font-size: 0.85rem;
+      line-height: 1.36rem; } }
   @media (max-width: 45em) {
     .footnotes {
-      font-size: 0.95rem;
-      line-height: 1.52rem; }
+      font-size: 0.85rem;
+      line-height: 1.36rem; }
       .footnotes .column {
         margin: auto;
         width: 100%; } }
@@ -382,8 +382,8 @@ hr {
  * Forms
  */
 form input {
-  font-size: 0.95rem;
-  line-height: 1.52rem;
+  font-size: 0.85rem;
+  line-height: 1.36rem;
   color: #3F3F3F;
   font-family: "Open Sans", sans-serif;
   background: #fdfdfd;
@@ -391,12 +391,12 @@ form input {
   padding: 8.3333333333px; }
   @media (max-width: 75em) {
     form input {
-      font-size: 0.95rem;
-      line-height: 1.52rem; } }
+      font-size: 0.85rem;
+      line-height: 1.36rem; } }
   @media (max-width: 45em) {
     form input {
-      font-size: 0.95rem;
-      line-height: 1.52rem; }
+      font-size: 0.85rem;
+      line-height: 1.36rem; }
       form input .column {
         margin: auto;
         width: 100%; } }
@@ -466,16 +466,16 @@ form input {
         padding: 5px 5px 5px 25px;
         background: #f2f2f2;
         text-align: left;
-        font-size: 0.95rem;
-        line-height: 1.52rem; } }
+        font-size: 0.85rem;
+        line-height: 1.36rem; } }
   @media screen and (max-width: 700px) and (max-width: 75em) {
     .site-header .lang-selector {
-      font-size: 0.95rem;
-      line-height: 1.52rem; } }
+      font-size: 0.85rem;
+      line-height: 1.36rem; } }
   @media screen and (max-width: 700px) and (max-width: 45em) {
     .site-header .lang-selector {
-      font-size: 0.95rem;
-      line-height: 1.52rem; }
+      font-size: 0.85rem;
+      line-height: 1.36rem; }
       .site-header .lang-selector .column {
         margin: auto;
         width: 100%; } }
@@ -712,16 +712,16 @@ form input {
 
 @media screen and (max-width: 700px) {
   .site-footer {
-    font-size: 0.95rem;
-    line-height: 1.52rem; } }
+    font-size: 0.85rem;
+    line-height: 1.36rem; } }
   @media screen and (max-width: 700px) and (max-width: 75em) {
     .site-footer {
-      font-size: 0.95rem;
-      line-height: 1.52rem; } }
+      font-size: 0.85rem;
+      line-height: 1.36rem; } }
   @media screen and (max-width: 700px) and (max-width: 45em) {
     .site-footer {
-      font-size: 0.95rem;
-      line-height: 1.52rem; }
+      font-size: 0.85rem;
+      line-height: 1.36rem; }
       .site-footer .column {
         margin: auto;
         width: 100%; } }
@@ -850,18 +850,18 @@ form input {
 .post-content {
   padding-bottom: 25px; }
   .post-content .footnotes {
-    font-size: 0.95rem;
-    line-height: 1.52rem;
+    font-size: 0.85rem;
+    line-height: 1.36rem;
     margin-top: 8.3333333333px;
     padding-top: 25px; }
     @media (max-width: 75em) {
       .post-content .footnotes {
-        font-size: 0.95rem;
-        line-height: 1.52rem; } }
+        font-size: 0.85rem;
+        line-height: 1.36rem; } }
     @media (max-width: 45em) {
       .post-content .footnotes {
-        font-size: 0.95rem;
-        line-height: 1.52rem; }
+        font-size: 0.85rem;
+        line-height: 1.36rem; }
         .post-content .footnotes .column {
           margin: auto;
           width: 100%; } }
@@ -901,18 +901,18 @@ form input {
     color: grey; }
 
 .colored-block {
-  font-size: 0.95rem;
-  line-height: 1.52rem;
+  font-size: 0.85rem;
+  line-height: 1.36rem;
   background: #f2f2f2;
   padding: 5%; }
   @media (max-width: 75em) {
     .colored-block {
-      font-size: 0.95rem;
-      line-height: 1.52rem; } }
+      font-size: 0.85rem;
+      line-height: 1.36rem; } }
   @media (max-width: 45em) {
     .colored-block {
-      font-size: 0.95rem;
-      line-height: 1.52rem; }
+      font-size: 0.85rem;
+      line-height: 1.36rem; }
       .colored-block .column {
         margin: auto;
         width: 100%; } }
@@ -967,18 +967,18 @@ form input {
     margin-bottom: 0; }
 
 .about-col-2 {
-  font-size: 0.95rem;
-  line-height: 1.52rem;
+  font-size: 0.85rem;
+  line-height: 1.36rem;
   width: -webkit-calc(75% - (50px / 4));
   width: calc(75% - (50px / 4)); }
   @media (max-width: 75em) {
     .about-col-2 {
-      font-size: 0.95rem;
-      line-height: 1.52rem; } }
+      font-size: 0.85rem;
+      line-height: 1.36rem; } }
   @media (max-width: 45em) {
     .about-col-2 {
-      font-size: 0.95rem;
-      line-height: 1.52rem; }
+      font-size: 0.85rem;
+      line-height: 1.36rem; }
       .about-col-2 .column {
         margin: auto;
         width: 100%; } }
